@@ -1,0 +1,24 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<h3>Ice cream parlor</h3>
+<ul>
+@foreach (var iceCream in Model.IceCreams)
+{
+    <li>@iceCream.Name ice cream</li>
+}
+</ul>
+<h3>Bakery</h3>
+<ul>
+@foreach (var cookie in Model.Cookies)
+{
+    <li>@cookie.Name cookies</li>
+}
+</ul>
