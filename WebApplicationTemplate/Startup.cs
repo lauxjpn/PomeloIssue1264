@@ -25,14 +25,15 @@ namespace WebApplicationTemplate
         {
             services.AddRazorPages();
             
+            // Create custom internal service provider.
             var efCoreServiceProvider = new ServiceCollection()
                 .AddEntityFrameworkMySql()
                 .AddSingleton<ISqlGenerationHelper, CustomMySqlSqlGenerationHelper>()
                 .BuildServiceProvider();
 
-            var connectionString = "server=127.0.0.1;port=3306;user=root;password=;database=Issue1264_IceCreamParlor";
+            var connectionString = "server=127.0.0.1;port=33105;user=root;password=;database=Issue1264_IceCreamParlor";
             services.AddDbContext<Context>(b => b
-                .UseInternalServiceProvider(efCoreServiceProvider)
+                .UseInternalServiceProvider(efCoreServiceProvider) // <-- add our custom internal service provider
                 .UseMySql(
                     connectionString,
                     ServerVersion.AutoDetect(connectionString),
@@ -93,15 +94,6 @@ namespace WebApplicationTemplate
                 command.ExecuteNonQuery();
 
                 context.Database.EnsureCreated();
-                
-                // Seed some data.
-                context.Database.ExecuteSqlInterpolated($"DELETE FROM `Issue1264_IceCreamParlor`.`IceCreams`;");
-                context.Database.ExecuteSqlInterpolated($"INSERT INTO `Issue1264_IceCreamParlor`.`IceCreams` (`IceCreamId`, `Name`) VALUES (1, 'Vanilla');");
-                context.Database.ExecuteSqlInterpolated($"INSERT INTO `Issue1264_IceCreamParlor`.`IceCreams` (`IceCreamId`, `Name`) VALUES (2, 'Chocolate');");
-                
-                context.Database.ExecuteSqlInterpolated($"DELETE FROM `Issue1264_Bakery`.`Cookies`;");
-                context.Database.ExecuteSqlInterpolated($"INSERT INTO `Issue1264_Bakery`.`Cookies` (`CookieId`, `Name`) VALUES (1, 'Basic');");
-                context.Database.ExecuteSqlInterpolated($"INSERT INTO `Issue1264_Bakery`.`Cookies` (`CookieId`, `Name`) VALUES (2, 'Chocolate Chip');");
             }
         }
     }

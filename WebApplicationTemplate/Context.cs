@@ -46,6 +46,16 @@ namespace WebApplicationTemplate
             
             // Map the `Cookie` entity to the `Cookies` table on the `Issue1264_Bakery` database.
             modelBuilder.Entity<Cookie>().ToTable("Cookies", "Issue1264_Bakery");
+            
+            // Seed some test data.
+            modelBuilder.Entity<IceCream>()
+                .HasData(
+                    new IceCream {IceCreamId = 1, Name = "Vanilla"},
+                    new IceCream {IceCreamId = 2, Name = "Chocolate"});
+            modelBuilder.Entity<Cookie>()
+                .HasData(
+                    new Cookie {CookieId = 1, Name = "Basic"},
+                    new Cookie {CookieId = 2, Name = "Chocolate Chip"});
         }
     }
 }
